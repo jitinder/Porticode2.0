@@ -25,6 +25,8 @@ public class BankThings {
     static String userId = "";
     static String accountId = "";
     static NFCThings thing;
+    Customer me;
+    Account mine;
 
     //ideally a lot of this should be abstracted to a server but i'm too lazy
 
@@ -50,6 +52,7 @@ public class BankThings {
                         //created account!
                         List<Customer> res = (List<Customer>)result;
                         userId = res.get(0).getId();
+                        me = res.get(0);
                         CreateAccount(callback);
                     }
 
@@ -67,6 +70,30 @@ public class BankThings {
         else if (username.equals("americo")) userId = "59f4517aa73e4942cdafe4a5";
         else if (username.equals("otilia")) userId = "59f4517aa73e4942cdafe4a4";
         else return false;
+        bankClient.CUSTOMER.getCustomer(userId, new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result) {
+                BankThings.this.me = ((List<Customer>)result).get(0);
+                bankClient.ACCOUNT.getCustomerAccounts(userId, new NessieResultsListener() {
+                    @Override
+                    public void onSuccess(Object rest) {
+                        BankThings.this.mine = ((List<Account>)rest).get(0);
+                        //ok.
+                    }
+
+                    @Override
+                    public void onFailure(NessieError error) {
+                        Log.e("BankAPIController", "could not get account for customer. perhaps customer has no accounts?");
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(NessieError error) {
+                Log.e("BankAPIController", "could not find account with id, error:");
+                Log.e("BankAPIController", error.getMessage());
+            }
+        });
         return true;
     }
 
@@ -80,6 +107,7 @@ public class BankThings {
             public void onSuccess(Object result) {
                 List<Account> res = (List<Account>) result;
                 accountId = res.get(0).getId();
+                mine = res.get(0);
                 callback.run();
             }
 
@@ -92,11 +120,11 @@ public class BankThings {
 
     }
 
-    void GetAccounts(NessieResultsListener callback){
-            bankClient.ACCOUNT.getCustomerAccounts(userId, callback);
-    }
+    /*void GetAccounts(NessieResultsListener callback){
+        bankClient.ACCOUNT.getCustomerAccounts(userId, callback);
+    }*/
 
-    void GetBalance(String accountId, NessieResultsListener callback){
+    void GetBalance(NessieResultsListener callback){
         if(userId.equals("")) {
             callback.onFailure(null);
             return;
