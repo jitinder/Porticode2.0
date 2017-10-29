@@ -170,14 +170,26 @@ public class MainActivity extends AppCompatActivity {
         if(!awaitTransfer) return;
         awaitTransfer = false;
         NdefMessage[] messages = getNdefMessages(intent);
-        Log.d("NfcReceiver", displayByteArray(messages[0].toByteArray()));
+        Log.d("NfcReceiver", displayByteArray(messages[0].getRecords()[0].getPayload()));
         TextView amtTv = findViewById(R.id.amtTv);
         TextView descTv = findViewById(R.id.descTv);
-        BankThings.MakeTransfer(displayByteArray(messages[0].toByteArray()), Double.parseDouble(amtTv.getText().toString()), descTv.getText().toString(), new NessieResultsListener() {
+        BankThings.MakeTransfer(displayByteArray(messages[0].getRecords()[0].getPayload()), Double.parseDouble(amtTv.getText().toString()), descTv.getText().toString(), new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
                 //easy
                 Toast.makeText(MainActivity.this, "Transfer submitted!", Toast.LENGTH_SHORT).show();
+                BankThings.GetBalance(new NessieResultsListener() {
+                    @Override
+                    public void onSuccess(Object result) {
+                        final TextView balanceView = (TextView) findViewById(R.id.balance_text);
+                        balanceView.setText(((List<Account>)result).get(0).getBalance().toString());
+                    }
+
+                    @Override
+                    public void onFailure(NessieError error) {
+
+                    }
+                });
             }
 
             @Override
