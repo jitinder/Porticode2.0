@@ -26,9 +26,8 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
 
     @Override
     public View getView(int pos, View convertView, ViewGroup parent){
-        mapper.put("59f543a0b390353c953a1953", "Sam Gao");
-        mapper.put("59f4517aa73e4942cdafe4a5", "Americo");
-        mapper.put("59f5ad4cb390353c953a19de", "Sidak");
+        mapper.put("59f5acd8b390353c953a19dd", "Sam Gao");
+        mapper.put("59f5ad7cb390353c953a19df", "Sidak");
 
 
         Transfer trfx = getItem(pos);
