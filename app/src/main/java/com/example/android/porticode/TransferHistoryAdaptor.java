@@ -10,18 +10,27 @@ import android.widget.TextView;
 import com.reimaginebanking.api.nessieandroidsdk.models.Transfer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Sam on 29/10/2017.
  */
+
 
 public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
     public TransferHistoryAdaptor (Context ctx, ArrayList<Transfer> trfs){
         super(ctx, 0, trfs);
     }
 
+    HashMap<String, String> mapper = new HashMap<String, String>();
+
     @Override
     public View getView(int pos, View convertView, ViewGroup parent){
+        mapper.put("59f543a0b390353c953a1953", "Sam Gao");
+        mapper.put("59f4517aa73e4942cdafe4a5", "Americo");
+        mapper.put("59f5ad4cb390353c953a19de", "Sidak");
+
+
         Transfer trfx = getItem(pos);
         View row = null;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -41,16 +50,16 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
 
         if(trfx.getPayeeId().equals(BankThings.accountId)) {
             //we are the payee
-            tvName.setText(trfx.getPayerId());
+            tvName.setText(mapper.get(trfx.getPayerId()));
+            tvDesc.setText(trfx.getDescription());
+            tvAmt.setText(String.format("$%.2f", trfx.getAmount()));
+            tvDir.setText(" ↓ ");
+        } else {
+            //we are the payee
+            tvName.setText(mapper.get(trfx.getPayeeId()));
             tvDesc.setText(trfx.getDescription());
             tvAmt.setText(String.format("$%.2f", trfx.getAmount()));
             tvDir.setText(" ↑ ");
-        } else {
-            //we are the payee
-            tvName.setText(trfx.getPayeeId());
-            tvDesc.setText(trfx.getDescription());
-            tvAmt.setText(String.format("$%.2lf", trfx.getAmount()));
-            tvDir.setText(" ↓ ");
         }
 
         return row;
