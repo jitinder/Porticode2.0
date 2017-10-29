@@ -17,12 +17,14 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Button loginButton = (Button) findViewById(R.id.login_button);
         Button registerButton = (Button) findViewById(R.id.register_button);
+        final EditText usernameField = (EditText) findViewById(R.id.username_field_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean allGood = doInputCheck();
                 if(allGood == true){
                     Toast.makeText(Login.this, "Correct Credentials", Toast.LENGTH_SHORT).show();
+                    BankThings.Login(usernameField.getText().toString(), "");
                     Intent intent = new Intent(v.getContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
