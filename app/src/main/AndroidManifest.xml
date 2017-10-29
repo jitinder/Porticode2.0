@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.porticode">
 
+    <uses-permission android:name="android.permission.NFC" />
     <application
         tools:replace="android:icon"
         android:allowBackup="true"
@@ -21,6 +22,9 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/com.example.android.porticode" />
             </intent-filter>
         </activity>
         <activity android:name=".Login"
