@@ -91,6 +91,7 @@
                     android:backgroundTint="#CE93D8"
                     android:drawableTop="@drawable/get_money"/>
                 <Button
+                    android:id="@+id/historyButton"
                     android:layout_width="wrap_content"
                     android:layout_height="75dp"
                     android:layout_margin="20dp"

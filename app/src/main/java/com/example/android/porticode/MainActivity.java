@@ -28,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final TextView balanceView = (TextView) findViewById(R.id.balance_text);
+        Button viewHistory = (Button) findViewById(R.id.historyButton);
+
+        viewHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TransferHistory.class);
+                startActivity(intent);
+            }
+        });
+
         BankThings.GetBalance(new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
