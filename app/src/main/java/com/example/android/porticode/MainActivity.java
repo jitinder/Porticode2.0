@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         onNewIntent(getIntent());
+        mNfcAdapter.setNdefPushMessage(null, this, this);
     }
 
     private NdefMessage[] getNdefMessages(Intent intent) {

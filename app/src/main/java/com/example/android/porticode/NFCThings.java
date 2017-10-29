@@ -44,6 +44,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
 
     @Override
     public void onNdefPushComplete(NfcEvent nfcEvent) {
+        mNfcAdapter.setNdefPushMessage(null, c, this);
         //it's done
         //???
         //Toast.makeText(c, "Transfer submitted!", Toast.LENGTH_SHORT).show();
