@@ -22,15 +22,15 @@ import java.util.List;
 
 public class BankThings {
 
-    NessieClient bankClient = NessieClient.getInstance("78b8262aaa957f0aa1be6b9b6dc2f827");
+    static NessieClient bankClient = NessieClient.getInstance("78b8262aaa957f0aa1be6b9b6dc2f827");
     static String userId = "";
     public static String accountId = "";
-    Customer me;
-    Account mine;
+    static Customer me;
+    static Account mine;
 
     //ideally a lot of this should be abstracted to a server but i'm too lazy
 
-    void RegisterNewAccount(final String username, String password, String firstName, String lastName, final Runnable callback){
+    static void RegisterNewAccount(final String username, String password, String firstName, String lastName, final Runnable callback){
         //the password is actually ignored
         Address.Builder builder = new Address.Builder();
         builder.streetNumber("602");
@@ -61,7 +61,7 @@ public class BankThings {
         );
     }
 
-    boolean Login(String username, String password){
+    static boolean Login(String username, String password){
         if(username.equals("sam")) userId = "59f543a0b390353c953a1953";
         else if (username.equals("americo")) userId = "59f4517aa73e4942cdafe4a5";
         else if (username.equals("otilia")) userId = "59f4517aa73e4942cdafe4a4";
@@ -69,11 +69,12 @@ public class BankThings {
         bankClient.CUSTOMER.getCustomer(userId, new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
-                BankThings.this.me = ((List<Customer>)result).get(0);
+                me = ((List<Customer>)result).get(0);
                 bankClient.ACCOUNT.getCustomerAccounts(userId, new NessieResultsListener() {
                     @Override
                     public void onSuccess(Object rest) {
-                        BankThings.this.mine = ((List<Account>)rest).get(0);
+                        mine = ((List<Account>)rest).get(0);
+                        accountId = mine.getId();
                         //ok.
                     }
 
@@ -93,7 +94,7 @@ public class BankThings {
         return true;
     }
 
-    void CreateAccount(final Runnable callback){
+    static void CreateAccount(final Runnable callback){
         Account.Builder builder = new Account.Builder();
         builder.balance((int)(Math.random() * 2000));
         builder.nickname("Account");
@@ -120,15 +121,14 @@ public class BankThings {
         bankClient.ACCOUNT.getCustomerAccounts(userId, callback);
     }*/
 
-    void GetBalance(NessieResultsListener callback){
+    static double GetBalance(){
         if(userId.equals("")) {
-            callback.onFailure(null);
-            return;
+            return 0.0f;
         }
-        bankClient.ACCOUNT.getAccount(accountId, callback);
+        return mine.getBalance();
     }
 
-    void MakeTransfer(String recipientId, double amount, String description, NessieResultsListener callback){
+    static void MakeTransfer(String recipientId, double amount, String description, NessieResultsListener callback){
         Transfer.Builder builder = new Transfer.Builder();
         builder.amount(amount);
         builder.description(description);
@@ -137,11 +137,11 @@ public class BankThings {
         bankClient.TRANSFER.createTransfer(accountId, builder.build(), callback);
     }
 
-    void BeamAccountId(Activity a){
+    static void BeamAccountId(Activity a){
         (new NFCThings(a)).PrepareBeamTag(accountId);
     }
 
-    void GetTransferHistory(NessieResultsListener callback){
+    static void GetTransferHistory(NessieResultsListener callback){
         bankClient.TRANSFER.getTransfers(accountId, callback);
     }
 
