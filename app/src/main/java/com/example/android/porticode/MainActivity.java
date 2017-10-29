@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.reimaginebanking.api.nessieandroidsdk.NessieError;
 import com.reimaginebanking.api.nessieandroidsdk.NessieResultsListener;
+import com.reimaginebanking.api.nessieandroidsdk.models.Account;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +27,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView balanceView = (TextView) findViewById(R.id.balance_text);
+        final TextView balanceView = (TextView) findViewById(R.id.balance_text);
+        BankThings.GetBalance(new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result) {
+                balanceView.setText(((List<Account>)result).get(0).getBalance().toString());
+            }
+
+            @Override
+            public void onFailure(NessieError error) {
+
+            }
+        });
         balanceView.setText(String.valueOf(BankThings.GetBalance()));
         mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass())
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);

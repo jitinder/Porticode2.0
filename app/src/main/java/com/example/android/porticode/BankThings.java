@@ -123,11 +123,9 @@ public class BankThings {
         bankClient.ACCOUNT.getCustomerAccounts(userId, callback);
     }*/
 
-    static double GetBalance(){
-        if(userId.equals("")) {
-            return 0.0f;
-        }
-        return mine.getBalance();
+    static void GetBalance(NessieResultsListener callback){
+        if(userId.equals("")) { callback.onFailure(null); }
+        bankClient.ACCOUNT.getCustomerAccounts(userId, callback);
     }
 
     static void MakeTransfer(String recipientId, double amount, String description, NessieResultsListener callback){
