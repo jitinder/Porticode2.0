@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
     <LinearLayout
-        android:layout_alignParentLeft="true"
+        android:layout_weight="80"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -21,7 +21,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_alignParentRight="true"
+        android:layout_weight="20"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -29,7 +29,9 @@
             android:id="@+id/tvAmount"
             android:text="$1000.00"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:layout_width="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"/>
         <TextView
             android:id="@+id/tvDirection"
             android:text=" ↑ "
@@ -38,4 +40,4 @@
             android:textAlignment="textEnd"
             android:layout_gravity="end"/>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

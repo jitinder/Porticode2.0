@@ -2,6 +2,7 @@ package com.example.android.porticode;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.reimaginebanking.api.nessieandroidsdk.NessieError;
@@ -24,6 +25,7 @@ public class TransferHistory extends AppCompatActivity {
         BankThings.GetTransferHistory(new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
+                Log.d("balance", "pull success");
                 mAdapter = new TransferHistoryAdaptor(TransferHistory.this, (ArrayList<Transfer>) result);
                 ListView listView = findViewById(R.id.list_view);
                 listView.setAdapter(mAdapter);
@@ -31,7 +33,8 @@ public class TransferHistory extends AppCompatActivity {
 
             @Override
             public void onFailure(NessieError error) {
-
+                Log.e("balance", "failed with err:");
+                Log.e("balance", error.getMessage());
             }
         });
 
