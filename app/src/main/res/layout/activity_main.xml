@@ -53,6 +53,7 @@
                     android:id="@+id/amtTv"
                     style="@style/edit"
                     android:hint=" Amount to Send "
+                    android:textAlignment="center"
                     android:inputType="numberDecimal"
                     android:layout_marginBottom="15dp"/>
                 <EditText
