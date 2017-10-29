@@ -62,9 +62,11 @@ public class BankThings {
     }
 
     static boolean Login(String username, String password){
+        Log.d("check login", username);
         if(username.equals("sam")) userId = "59f543a0b390353c953a1953";
         else if (username.equals("americo")) userId = "59f4517aa73e4942cdafe4a5";
         else if (username.equals("otilia")) userId = "59f4517aa73e4942cdafe4a4";
+        else if (username.equals("sid")) userId = "59f5ad4cb390353c953a19de";
         else return false;
         bankClient.CUSTOMER.getCustomer(userId, new NessieResultsListener() {
             @Override
