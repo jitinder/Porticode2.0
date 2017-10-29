@@ -23,19 +23,27 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
     @Override
     public View getView(int pos, View convertView, ViewGroup parent){
         Transfer trfx = getItem(pos);
-        if(convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_transfer, parent);
+        View row = null;
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            row = inflater.inflate(R.layout.item_transfer, parent,
+                    false);
+        } else {
+            row = convertView;
         }
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-        TextView tvDesc = (TextView) convertView.findViewById(R.id.tvDesc);
-        TextView tvAmt = (TextView) convertView.findViewById(R.id.tvAmount);
-        TextView tvDir = (TextView) convertView.findViewById(R.id.tvDirection);
+        //if(convertView == null) {
+        //    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_transfer, null);
+        //}
+        TextView tvName = (TextView) row.findViewById(R.id.tvName);
+        TextView tvDesc = (TextView) row.findViewById(R.id.tvDesc);
+        TextView tvAmt = (TextView) row.findViewById(R.id.tvAmount);
+        TextView tvDir = (TextView) row.findViewById(R.id.tvDirection);
 
         if(trfx.getPayeeId().equals(BankThings.accountId)) {
             //we are the payee
             tvName.setText(trfx.getPayerId());
             tvDesc.setText(trfx.getDescription());
-            tvAmt.setText(String.format("$%.2lf", trfx.getAmount()));
+            tvAmt.setText(String.format("$%.2f", trfx.getAmount()));
             tvDir.setText(" ↑ ");
         } else {
             //we are the payee
@@ -45,6 +53,6 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
             tvDir.setText(" ↓ ");
         }
 
-        return convertView;
+        return row;
     }
 }
