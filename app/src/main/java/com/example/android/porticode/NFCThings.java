@@ -27,7 +27,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
     void PrepareBeamTag(String data){
         mNfcAdapter = NfcAdapter.getDefaultAdapter(c);
         if (mNfcAdapter == null) {
-            Log.d("NFCThing", "NFC is not available on this device.");
+            Log.e("NFCThing", "NFC is not available on this device.");
             return;
         }
         // Register callback
@@ -39,6 +39,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
         NdefMessage message = new NdefMessage(new NdefRecord[] { record });
         mNfcAdapter.setNdefPushMessage(message, c);
         mNfcAdapter.setOnNdefPushCompleteCallback(this, c);
+        Log.e("nfc", "set push");
     }
 
     @Override
@@ -46,6 +47,6 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
         //it's done
         //???
         Toast.makeText(c, "Transfer submitted!", Toast.LENGTH_SHORT).show();
-        c.finish();
+        //c.finish();
     }
 }
