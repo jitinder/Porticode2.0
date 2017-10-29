@@ -31,7 +31,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
             return;
         }
         // Register callback
-        String type = "application/com.example.android.porticode";
+        String type = "text/plain";
         byte[] mimeBytes = type.getBytes(Charset.forName("UTF-8"));
         byte[] dataBytes = data.getBytes(Charset.forName("UTF-8"));
         byte[] id = new byte[0];
