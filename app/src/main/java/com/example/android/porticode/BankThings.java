@@ -71,7 +71,7 @@ public class BankThings {
         bankClient.CUSTOMER.getCustomer(userId, new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
-                me = ((List<Customer>)result).get(0);
+                me = (Customer)result;
                 bankClient.ACCOUNT.getCustomerAccounts(userId, new NessieResultsListener() {
                     @Override
                     public void onSuccess(Object rest) {
