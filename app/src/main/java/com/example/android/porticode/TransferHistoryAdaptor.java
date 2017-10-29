@@ -46,6 +46,7 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
         TextView tvDesc = (TextView) row.findViewById(R.id.tvDesc);
         TextView tvAmt = (TextView) row.findViewById(R.id.tvAmount);
         TextView tvDir = (TextView) row.findViewById(R.id.tvDirection);
+        TextView tvState = (TextView) row.findViewById(R.id.tvStatus);
 
         if(trfx.getPayeeId().equals(BankThings.accountId)) {
             //we are the payee
@@ -60,6 +61,8 @@ public class TransferHistoryAdaptor extends ArrayAdapter<Transfer> {
             tvAmt.setText(String.format("$%.2f", trfx.getAmount()));
             tvDir.setText(" ↑ ");
         }
+
+        tvState.setText(trfx.getStatus());
 
         return row;
     }
