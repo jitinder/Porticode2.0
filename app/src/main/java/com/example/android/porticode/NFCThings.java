@@ -45,7 +45,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
     public void onNdefPushComplete(NfcEvent nfcEvent) {
         //it's done
         //???
-        Toast.makeText(c, "Sent!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(c, "Transfer submitted!", Toast.LENGTH_SHORT).show();
         c.finish();
     }
 }

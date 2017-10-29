@@ -8,6 +8,8 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,21 @@ public class MainActivity extends AppCompatActivity {
         balanceView.setText(String.valueOf(BankThings.GetBalance()));
         mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass())
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+        Button send = findViewById(R.id.sendButton),
+                recv = findViewById(R.id.receiveButton);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                awaitTransfer = true;
+            }
+        });
+        recv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BankThings.BeamAccountId(MainActivity.this);
+            }
+        });
     }
 
     private NdefMessage[] getNdefMessages(Intent intent) {
@@ -56,9 +73,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onNewIntent(Intent intent){
         super.onNewIntent(intent);
         if(!awaitTransfer) return;
+        awaitTransfer = false;
         NdefMessage[] messages = getNdefMessages(intent);
         Log.d("NfcReceiver", displayByteArray(messages[0].toByteArray()));
         TextView amtTv = findViewById(R.id.amtTv);
-        //BankThings.MakeTransfer(displayByteArray(messages[0].toByteArray()), Double.parseDouble(amtTv.getText().toString()), );
+        TextView descTv = findViewById(R.id.descTv);
+        BankThings.MakeTransfer(displayByteArray(messages[0].toByteArray()), Double.parseDouble(amtTv.getText().toString()), descTv.getText().toString(), new NessieResultsListener() {
+            @Override
+            public void onSuccess(Object result) {
+                //easy
+                Toast.makeText(MainActivity.this, "Transfer submitted!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(NessieError error) {
+                //not easy
+            }
+        });
     }
 }

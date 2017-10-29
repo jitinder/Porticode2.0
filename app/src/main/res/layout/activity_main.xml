@@ -63,6 +63,7 @@
                     android:hint="Description"
                     android:inputType="text" />
                 <Button
+                    android:id="@+id/sendButton"
                     android:layout_width="125dp"
                     android:layout_height="75dp"
                     android:layout_margin="20dp"
@@ -78,6 +79,7 @@
                     android:layout_margin="10dp"
                     android:layout_gravity="center"/>
                 <Button
+                    android:id="@+id/receiveButton"
                     android:layout_width="125dp"
                     android:layout_height="75dp"
                     android:layout_margin="20dp"
