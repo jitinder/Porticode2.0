@@ -24,7 +24,7 @@ public class BankThings {
 
     NessieClient bankClient = NessieClient.getInstance("78b8262aaa957f0aa1be6b9b6dc2f827");
     static String userId = "";
-    static String accountId = "";
+    public static String accountId = "";
     Customer me;
     Account mine;
 
@@ -139,6 +139,10 @@ public class BankThings {
 
     void BeamAccountId(Activity a){
         (new NFCThings(a)).PrepareBeamTag(accountId);
+    }
+
+    void GetTransferHistory(NessieResultsListener callback){
+        bankClient.TRANSFER.getTransfers(accountId, callback);
     }
 
 }
