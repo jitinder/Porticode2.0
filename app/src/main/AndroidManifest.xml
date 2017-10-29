@@ -32,6 +32,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Register"
             android:screenOrientation="portrait"/>
+        <activity android:name=".TransferHistory" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
