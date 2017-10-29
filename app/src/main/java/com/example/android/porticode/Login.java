@@ -23,8 +23,8 @@ public class Login extends AppCompatActivity {
                 boolean allGood = doInputCheck();
                 if(allGood == true){
                     Toast.makeText(Login.this, "Correct Credentials", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(v.getContext(), Login.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(Login.this, "Invalid Credentials. Please try again", Toast.LENGTH_SHORT).show();
                 }

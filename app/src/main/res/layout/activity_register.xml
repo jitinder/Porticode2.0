@@ -152,7 +152,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="#DCE775"
+                android:backgroundTint="#AED581"
                 android:text="already have an account? Login here" />
         </LinearLayout>
     </ScrollView>
