@@ -10,6 +10,7 @@ import com.reimaginebanking.api.nessieandroidsdk.constants.TransactionMedium;
 import com.reimaginebanking.api.nessieandroidsdk.models.Account;
 import com.reimaginebanking.api.nessieandroidsdk.models.Address;
 import com.reimaginebanking.api.nessieandroidsdk.models.Customer;
+import com.reimaginebanking.api.nessieandroidsdk.models.PostResponse;
 import com.reimaginebanking.api.nessieandroidsdk.models.Transfer;
 import com.reimaginebanking.api.nessieandroidsdk.requestclients.NessieClient;
 
@@ -24,15 +25,10 @@ public class BankThings {
     NessieClient bankClient = NessieClient.getInstance("78b8262aaa957f0aa1be6b9b6dc2f827");
     static String userId = "";
     static String accountId = "";
-    static NFCThings thing;
     Customer me;
     Account mine;
 
     //ideally a lot of this should be abstracted to a server but i'm too lazy
-
-    BankThings(Activity a){
-        thing = new NFCThings(a);
-    }
 
     void RegisterNewAccount(final String username, String password, String firstName, String lastName, final Runnable callback){
         //the password is actually ignored
@@ -50,9 +46,9 @@ public class BankThings {
                     @Override
                     public void onSuccess(Object result) {
                         //created account!
-                        List<Customer> res = (List<Customer>)result;
-                        userId = res.get(0).getId();
-                        me = res.get(0);
+                        PostResponse<Customer> res = (PostResponse<Customer>)result;
+                        userId = res.getObjectCreated().getId();
+                        me = res.getObjectCreated();
                         CreateAccount(callback);
                     }
 
@@ -105,9 +101,9 @@ public class BankThings {
         bankClient.ACCOUNT.createAccount(userId, builder.build(), new NessieResultsListener() {
             @Override
             public void onSuccess(Object result) {
-                List<Account> res = (List<Account>) result;
-                accountId = res.get(0).getId();
-                mine = res.get(0);
+                PostResponse<Account> res = (PostResponse<Account>) result;
+                accountId = res.getObjectCreated().getId();
+                mine = res.getObjectCreated();
                 callback.run();
             }
 
@@ -142,7 +138,7 @@ public class BankThings {
     }
 
     void BeamAccountId(Activity a){
-        thing.PrepareBeamTag(accountId);
+        (new NFCThings(a)).PrepareBeamTag(accountId);
     }
 
 }

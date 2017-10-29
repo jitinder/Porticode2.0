@@ -1,12 +1,12 @@
 package com.example.android.porticode;
 
 import android.app.Activity;
-import android.content.Context;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.nio.charset.Charset;
 
@@ -45,5 +45,7 @@ public class NFCThings implements NfcAdapter.OnNdefPushCompleteCallback{
     public void onNdefPushComplete(NfcEvent nfcEvent) {
         //it's done
         //???
+        Toast.makeText(c, "Sent!", Toast.LENGTH_SHORT).show();
+        c.finish();
     }
 }
